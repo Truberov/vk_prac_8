@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-cats-config
+data:
+  nginx.conf: |
+    server {
+      listen 80;
+      server_name cats.example.com;
+      location /cats {
+          root /var/www/cats;
+          index index.html;
+      }
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-dogs-config
+data:
+  nginx.conf: |
+    server {
+      listen 80;
+      server_name dogs.example.com;
+      location /dogs {
+          root /var/www/dogs;
+          index index.html;
+      }
+    }

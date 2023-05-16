@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /cats
+            backend:
+              service:
+                name: nginx-cats-service
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: /dogs
+            backend:
+              service:
+                name: nginx-dogs-service
+                port:
+                  number: 80

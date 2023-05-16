@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-cats-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-cats
+  template:
+    metadata:
+      labels:
+        app: nginx-cats
+    spec:
+      containers:
+        - name: nginx-cats
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-cats-config
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: nginx.conf
+      volumes:
+        - name: nginx-cats-config
+          configMap:
+            name: nginx-cats-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-dogs-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-dogs
+  template:
+    metadata:
+      labels:
+        app: nginx-dogs
+    spec:
+      containers:
+        - name: nginx-dogs
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-dogs-config
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: nginx.conf
+      volumes:
+        - name: nginx-dogs-config
+          configMap:
+            name: nginx-dogs-config
